@@ -6,8 +6,8 @@ template <class T, class U>
 decltype(auto) min_like(T&& a, U&& b) requires(
     requires (const T& x, const U& y){ static_cast<bool>(x < y); }
 ){
-    if(static_cast<bool>(a < b)) return std::forward<T>(a);
-    return std::forward<U>(b);
+    if(static_cast<bool>(b < a)) return std::forward<T>(b);
+    return std::forward<U>(a);
 }
 
 template <class T, class U>
@@ -15,8 +15,8 @@ decltype(auto) min_like(T&& a, U&& b) requires(
     !requires (const T& x, const U& y){ static_cast<bool>(x < y); } &&
     requires (const T& x, const U& y){ static_cast<bool>(x.size() < y.size()); }
 ){
-    if(static_cast<bool>(a.size() < b.size())) return std::forward<T>(a);
-    return std::forward<U>(b);
+    if(static_cast<bool>(b.size() < a.size())) return std::forward<T>(b);
+    return std::forward<U>(a);
 }
 
 template <class T, class U>
